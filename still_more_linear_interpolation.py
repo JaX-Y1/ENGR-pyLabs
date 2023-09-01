@@ -2,10 +2,13 @@
 # "Aggies do not lie, cheat, or steal, or tolerate those who do."
 # "I have not given or received any unauthorized aid on this assignment."
 #
-# Name:         Andrew Marshall
+# Names: Andrew Marshall
+# SK Thippireddy
+# Rishi Bandhu
+# Preston Montgomery
 # Section:      522
-# Assignment:   Lab 2.10
-# Date:         9 1 2023
+# Assignment:   Lab 3.16
+# Date:         1 9 2023
 from math import*
 time1 = float(input("Enter time 1: "))
 xPos1 = float(input("Enter the x position of the object at time 1: "))
