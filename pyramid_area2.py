@@ -17,9 +17,9 @@ from math import *
 #1:3 -> 9
 #1:2 -> 6
 #1:1 -> 3
-#2:3 -> 18
-#2:2 -> 12
-#2:1 -> 6
+#2:3 -> 36
+#2:2 -> 24
+#2:1 -> 12
 #the difference is the side length * 3 for the sequence
 sideLength = float(input("Enter the side length in meters: "))
 numLayers = int(input("Enter the number of layers: "))
