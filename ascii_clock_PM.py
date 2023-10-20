@@ -18,6 +18,11 @@ user_time = input(f'Enter the time: ')
 #Use String.split(“:”) to separate the digits into a time list.
 user_time_split = user_time.split(':')
 
+#reassign 1st and 2nd element as sublists containing each side's digits.
+user_time_split[0] = list(user_time_split[0])
+user_time_split[1] = list(user_time_split[1])
+#print(user_time_split)
+
 #Get Clock type
 user_clock = int(input(f'Choose the clock type (12 or 24): '))
 
@@ -27,6 +32,7 @@ user_char = str(input(f'Enter your preferred character: '))
 #Check if user inputted a character. If not, use each digit as the character for that digit.(Store as bool)
 if bool(user_char) == False:
     user_char_empty = True
+    
 
 #Check if character is in a string containing all permitted characters (abcdeghkmnopqrsuvwxyz@$&*=)
 elif user_char in 'abcdeghkmnopqrsuvwxyz@$&*=' :
@@ -36,4 +42,4 @@ elif user_char in 'abcdeghkmnopqrsuvwxyz@$&*=' :
 else:
     while user_char not in 'abcdeghkmnopqrsuvwxyz@$&*=':
         user_char = input(f'Enter your preferred character: ')
-    user_char = user_char
+    #print(user_char)
