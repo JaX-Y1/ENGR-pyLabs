@@ -9,6 +9,7 @@ totalBoardHeight = 200
 winnerDeclared = False
 turn = 1
 def drawXMatrix(boardHeight):
+    """Draws the vertical gridlines. Takes in board height."""
     for i in range(boardHeight+1):
         turt.up()
         turt.setpos(0,-i*(totalBoardHeight/boardHeight))
@@ -18,6 +19,7 @@ def drawXMatrix(boardHeight):
     turt.setpos(0,0)
     turt.down()
 def drawYMatrix(boardWidth):
+    """Draws the horizontal gridlines. Takes in board width."""
     turt.right(90)
     for i in range(boardWidth+1):
         turt.up()
@@ -30,6 +32,7 @@ def drawYMatrix(boardWidth):
     turt.left(90)
 
 def drawDiagonal(boardHeight, boardWidth,direction):
+    """Draws the diagonal board gridlines. Takes in board height, width, and the direction (down left, down right)"""
     turt.right(direction)
     startPos = 0
     if(direction>45):
@@ -65,6 +68,7 @@ def drawDiagonal(boardHeight, boardWidth,direction):
     turt.left(direction)
 
 def drawCircleFrames(boardHeight,boardWidth,circleRadius):
+    """Draws the tile frames on the board for pieces to go on. Takes in board height, width, and radius of the frame outlines."""
     for i in range(boardHeight+1):
         for j in range(boardWidth+1):
             turt.up()
@@ -78,10 +82,11 @@ def drawCircleFrames(boardHeight,boardWidth,circleRadius):
     turt.down()
 
 def initializeBoard(boardHeight,boardWidth,circleRadius):
+    """Draws the intitial board. Takes in board height,width, and radius for tiles"""
     turt.speed(10.5)
     turt.setpos(0,0)
     turt.fillcolor("white")
-    turt.pencolor("black")
+    turt.pencolor("black") #the board can be drawn with an adaptable height/width.
     drawXMatrix(boardHeight)
     drawYMatrix(boardWidth)
     drawDiagonal(boardHeight,boardWidth,45)
@@ -89,6 +94,8 @@ def initializeBoard(boardHeight,boardWidth,circleRadius):
     drawCircleFrames(boardHeight,boardWidth,circleRadius)
 
 def askInputs():
+    """Asks the user for the filename of the .csv file containing the board 
+    width/height. returns a string list containing the board contents."""
     print("Hello. Welcome to Python Teeko!")
     successFile = False
     boardContents = []
@@ -107,10 +114,13 @@ def askInputs():
     boardMatrix.close()
     #print(boardContents)
     return boardContents
+#PATH
 #C:\Users\Jacks\Desktop\ENGR102\ENGR-pyLabs\sounds\boom.mp3
 
 
 def createMatrix(boardList):
+    """Creates the numpy array with the board height/width. Takes in a 
+    list of strings containing the board contents. Returns a numpy matrix."""
     if(boardList==None):
         junk = np.array([-1])
         return junk
@@ -119,6 +129,8 @@ def createMatrix(boardList):
     return theBoard
 
 def drawUserCircles(boardMatrix,boardHeight,boardWidth,circleRadius):
+    """Draws the player pieces and plays a sound when each is drawn. Takes in a numpy matrix
+    height, width of the board, and the radius for the player piece circles."""
     for i in range(boardHeight+1):
         for j in range(boardWidth+1):
             noCircle=False
@@ -127,7 +139,7 @@ def drawUserCircles(boardMatrix,boardHeight,boardWidth,circleRadius):
             turt.down()
             if(boardMatrix[j,i]==1):
                 turt.fillcolor("black")
-                try:
+                try: #sound module is buggy, so this try/except is used so the game can still be played in sound not working.
                     playsound.playsound("boom.wav",False)
                 except:
                     print("Sound not available")
@@ -158,6 +170,8 @@ def drawUserCircles(boardMatrix,boardHeight,boardWidth,circleRadius):
     turt.down()
 
 def processTurn(matrix,startingPlayerColor,turnNumber):
+    """Asks for the user move input, including menu options. Returns the currentTurn + 1 or 
+    the varius menu options. Takes in the matrix, which player color starts first, and current turn number."""
     matrixWidth = matrix.shape[1]
     matrixHeight = matrix.shape[0]
     colorNumber = 0
@@ -190,7 +204,7 @@ def processTurn(matrix,startingPlayerColor,turnNumber):
             else:
                 turnColor = "Black"
                 colorNumber = 1
-    if(turnNumber<9):    
+    if(turnNumber<9):    #---THIS section runs for the first 8 turns
         userInput = turt.textinput(f"{turnColor}'s Move", f"{menuList}\n\nCoordinates: (1,1) - ({matrixWidth},{matrixHeight})")
         while(placeMove==False):
             result = isValidMove(matrix,userInput)
@@ -212,7 +226,7 @@ def processTurn(matrix,startingPlayerColor,turnNumber):
         matrix[xCord,yCord] = colorNumber
         drawUserCircles(matrix,matrixHeight-1,matrixWidth-1,6) #6 is hardcoded circle radius
         return turnNumber+1
-    else:
+    else: #--THIS section runs for the rest of the game until someone wins.
         userInput = turt.textinput(f"{turnColor}'s Move", f"{menuList}\n\nWhich Piece Do You Want To Move?\nCoordinates: (1,1) - ({matrixWidth},{matrixHeight})")
         while(placeMove==False):
             result = isValidMove(matrix,userInput,turnColor)
@@ -294,6 +308,8 @@ def checkMoves(matrix):
     return 0
 
 def checkHorizontal(matrix,rows,columns):
+    """Checks if a horizontal four-in-a-row has occured. Returns 0 if False, 1 if black, 2 if red.
+    Takes in the matrix, and the number of rows and columns."""
     for i in range(rows):
         blackRow=0
         redRow=0
@@ -317,6 +333,8 @@ def checkHorizontal(matrix,rows,columns):
     return 0
         
 def checkVertical(matrix,rows,columns):
+    """Checks if a vertical four-in-a-row has occured. Returns 0 if False, 1 if black, 2 if red.
+    Takes in the matrix, and the number of rows and columns."""
     for i in range(columns):
         blackCol=0
         redCol=0
@@ -339,9 +357,11 @@ def checkVertical(matrix,rows,columns):
     return 0
 
 def checkDiagonal(matrix,rows,columns):
+    """Checks if a diagonal four-in-a-row has occured. Returns 0 if False, 1 if black, 2 if red.
+    Takes in the matrix, and the number of rows and columns."""
     translateH=0
     translateV=1
-    for l in range(2):
+    for l in range(2): #runs twice for down left and down right
         if(l==0):
             horizontalStart=0
             translateH=1
@@ -383,6 +403,8 @@ def checkDiagonal(matrix,rows,columns):
     return 0
 
 def checkSquare(matrix,rows,columns):
+    """Checks if a square has been formed, which is also a win condition. Returns 0 if False, 1 if black, 2 if red.
+    Takes in the matrix, and the number of rows and columns."""
     for i in range(rows-1):
         for j in range(columns-1):
             if(matrix[j,i]==1):
@@ -398,6 +420,9 @@ def checkSquare(matrix,rows,columns):
     return 0
 
 def moveAdjacent(matrix,moveToInput,moveFromInput,color):
+    """Moves a piece on the board to an adjacent spot by deleting the old spot and adding the piece to
+    the new spot. Takes in the matrix, strings containing the move To and move From inputs,
+    and the color of the player piece moving."""
     numsTo = moveToInput.split(",")
     xToCord=int(numsTo[0])-1
     yToCord=int(numsTo[1])-1
@@ -443,14 +468,21 @@ def checkAdjacent(moveToInput,moveFromInput):
             return False
 
 def isValidMove(matrix,moveToInput,moveFromInput=False):
+    """This function checks to make sure that the spot being moved to is valid. 
+    It takes in the numpy matrix for the board, a string containing
+    the move to input, and an optional string containing the move from input. The move from
+    input additionally checks if the position being moved from contains
+    a player piece and that it's the same color as current turn's player. Returns True/False
+    if the move is valid or not. Returns a string contaning the menu option if a menu
+    option was inputted."""
     matrixWidth = matrix.shape[1]
     matrixHeight = matrix.shape[0]
-    if(moveToInput=="quit"):
+    if(moveToInput=="quit"): #-- this part checks for menu options
         return "quit"
     elif(moveToInput=="instructions"):
         return "instructions"
     elif(moveToInput=="turns"):
-        return "turns"
+        return "turns" #--
     try:
         nums = moveToInput.split(",")
         if(len(nums)>2):
