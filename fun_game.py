@@ -89,7 +89,7 @@ def initializeBoard(boardHeight,boardWidth,circleRadius):
     drawCircleFrames(boardHeight,boardWidth,circleRadius)
 
 def askInputs():
-    print("Hello. Welcome to Python Popup Teeko!")
+    print("Hello. Welcome to Python Teeko!")
     successFile = False
     boardContents = []
     while(successFile==False):
@@ -111,6 +111,9 @@ def askInputs():
 
 
 def createMatrix(boardList):
+    if(boardList==None):
+        junk = np.array([-1])
+        return junk
     boardWidth = boardList[0].strip().split(" ")
     theBoard = np.zeros((len(boardWidth),len(boardList)))
     return theBoard
@@ -516,40 +519,40 @@ def checkSurroundings(matrix,xCord,yCord):
 #driver code
 boardContentes = askInputs()
 matrix = createMatrix(boardContentes)
-boardMatrixWidth = matrix.shape[1]
-boardMatrixHeight = matrix.shape[0]
-initializeBoard(boardMatrixHeight-1,boardMatrixWidth-1,10) #10 is hardcoded outer circle radius
+if(matrix.ndim!=1):
+    boardMatrixWidth = matrix.shape[1]
+    boardMatrixHeight = matrix.shape[0]
+    initializeBoard(boardMatrixHeight-1,boardMatrixWidth-1,10) #10 is hardcoded outer circle radius
 
 
-while(winnerDeclared==False):
-    if(turn<9):
-        turn = processTurn(matrix,"Black",turn)
-        result = checkMoves(matrix)
-        if(result=="Black Won!"):
-            winnerDeclared=True
-            turt.textinput("Winner!","Black Won!")
-            turt.done()
-        elif(result=="Red Won!"):
-            winnerDeclared=True
-            turt.textinput("Winner!","Black Won!")
-            turt.done()
-        elif(turn==0): #quit return selection
-            print("Bye!")
-            break
-    else: #IF NO ONE WINS AFTER THIS, START MOVING PIECES
-        turn = processTurn(matrix,"Black",turn)
-        result = checkMoves(matrix)
-        if(result=="Black Won!"):
-            winnerDeclared=True
-            turt.textinput("Winner!","Black Won!")
-            turt.done()
-        elif(result=="Red Won!"):
-            winnerDeclared=True
-            turt.textinput("Winner!","Black Won!")
-            turt.done()
-        elif(turn==0): #quit return selection
-            print("Bye!")
-            break
-
+    while(winnerDeclared==False):
+        if(turn<9):
+            turn = processTurn(matrix,"Black",turn)
+            result = checkMoves(matrix)
+            if(result=="Black Won!"):
+                winnerDeclared=True
+                turt.textinput("Winner!","Black Won!")
+                turt.done()
+            elif(result=="Red Won!"):
+                winnerDeclared=True
+                turt.textinput("Winner!","Black Won!")
+                turt.done()
+            elif(turn==0): #quit return selection
+                print("Bye!")
+                break
+        else: #IF NO ONE WINS AFTER THIS, START MOVING PIECES
+            turn = processTurn(matrix,"Black",turn)
+            result = checkMoves(matrix)
+            if(result=="Black Won!"):
+                winnerDeclared=True
+                turt.textinput("Winner!","Black Won!")
+                turt.done()
+            elif(result=="Red Won!"):
+                winnerDeclared=True
+                turt.textinput("Winner!","Black Won!")
+                turt.done()
+            elif(turn==0): #quit return selection
+                print("Bye!")
+                break
+    turt.done()            
 print("Done")
-turt.done()
