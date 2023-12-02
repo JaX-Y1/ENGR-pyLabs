@@ -205,21 +205,21 @@ def processTurn(matrix,startingPlayerColor,turnNumber):
                 turnColor = "Black"
                 colorNumber = 1
     if(turnNumber<9):    #---THIS section runs for the first 8 turns
-        userInput = turt.textinput(f"{turnColor}'s Move", f"{menuList}\n\nCoordinates: (1,1) - ({matrixWidth},{matrixHeight})")
+        userInput = turt.textinput(f"{turnColor}'s Move", f"{menuList}\n\nCoordinates: (columns,rows)\nCoordinate Range: (1,1) - ({matrixWidth},{matrixHeight})")
         while(placeMove==False):
             result = isValidMove(matrix,userInput)
             if(result=="quit"):
                 return 0
             elif(result=="instructions"):
                 print("these are the instructions")
-                userInput = turt.textinput(f"{turnColor}'s Move", f"{menuList}\n\nCoordinates: (1,1) - ({matrixWidth},{matrixHeight})")
+                userInput = turt.textinput(f"{turnColor}'s Move", f"{menuList}\n\nCoordinates: (columns,rows)\nCoordinate Range: (1,1) - ({matrixWidth},{matrixHeight})")
             elif(result=="turns"):
                 print(f"Turn: {turnNumber}")
-                userInput = turt.textinput(f"{turnColor}'s Move", f"{menuList}\n\nCoordinates: (1,1) - ({matrixWidth},{matrixHeight})")
+                userInput = turt.textinput(f"{turnColor}'s Move", f"{menuList}\n\nCoordinates: (columns,rows)\nCoordinate Range: (1,1) - ({matrixWidth},{matrixHeight})")
             elif(result==True):
                 placeMove=True
             else:
-                userInput = turt.textinput(f"{turnColor}'s Move", f"{menuList}\n\nEnter a Valid Coordinate!\nCoordinates: (1,1) - ({matrixWidth},{matrixHeight})")
+                userInput = turt.textinput(f"{turnColor}'s Move", f"{menuList}\n\nEnter a Valid Coordinate!\nCoordinates: (columns,rows)\nCoordinate Range: (1,1) - ({matrixWidth},{matrixHeight})")
         nums = userInput.split(",")
         xCord=int(nums[0])-1
         yCord=int(nums[1])-1
@@ -227,17 +227,17 @@ def processTurn(matrix,startingPlayerColor,turnNumber):
         drawUserCircles(matrix,matrixHeight-1,matrixWidth-1,6) #6 is hardcoded circle radius
         return turnNumber+1
     else: #--THIS section runs for the rest of the game until someone wins.
-        userInput = turt.textinput(f"{turnColor}'s Move", f"{menuList}\n\nWhich Piece Do You Want To Move?\nCoordinates: (1,1) - ({matrixWidth},{matrixHeight})")
+        userInput = turt.textinput(f"{turnColor}'s Move", f"{menuList}\n\nWhich Piece Do You Want To Move?\nCoordinates: (columns,rows)\nCoordinate Range: (1,1) - ({matrixWidth},{matrixHeight})")
         while(placeMove==False):
             result = isValidMove(matrix,userInput,turnColor)
             if(result=="quit"):
                 return 0
             elif(result=="instructions"):
                 print("these are the instructions")
-                userInput = turt.textinput(f"{turnColor}'s Move", f"{menuList}\n\nWhich Piece Do You Want To Move?\nCoordinates: (1,1) - ({matrixWidth},{matrixHeight})")
+                userInput = turt.textinput(f"{turnColor}'s Move", f"{menuList}\n\nWhich Piece Do You Want To Move?\nCoordinates: (columns,rows)\nCoordinate Range: (1,1) - ({matrixWidth},{matrixHeight})")
             elif(result=="turns"):
                 print(f"Turn: {turnNumber}")
-                userInput = turt.textinput(f"{turnColor}'s Move", f"{menuList}\n\nWhich Piece Do You Want To Move?\nCoordinates: (1,1) - ({matrixWidth},{matrixHeight})")
+                userInput = turt.textinput(f"{turnColor}'s Move", f"{menuList}\n\nWhich Piece Do You Want To Move?\nCoordinates: (columns,rows)\nCoordinate Range: (1,1) - ({matrixWidth},{matrixHeight})")
             elif(result==True):
                 nums = userInput.split(",")
                 xCord=int(nums[0])-1
@@ -245,21 +245,21 @@ def processTurn(matrix,startingPlayerColor,turnNumber):
                 if(checkSurroundings(matrix,xCord,yCord)):
                     placeMove=True
                 else:
-                    userInput = turt.textinput(f"{turnColor}'s Move", f"{menuList}\n\nThat Piece Can't Move Anywhere. Try Again!\nCoordinates: (1,1) - ({matrixWidth},{matrixHeight})")
+                    userInput = turt.textinput(f"{turnColor}'s Move", f"{menuList}\n\nThat Piece Can't Move Anywhere. Try Again!\nCoordinates: (columns,rows)\nCoordinate Range: (1,1) - ({matrixWidth},{matrixHeight})")
             else:
-                userInput = turt.textinput(f"{turnColor}'s Move", f"{menuList}\n\nPlease Choose a Tile With Your Color To Move From!\nCoordinates: (1,1) - ({matrixWidth},{matrixHeight})")
+                userInput = turt.textinput(f"{turnColor}'s Move", f"{menuList}\n\nPlease Choose a Tile With Your Color To Move From!\nCoordinates: (columns,rows)\nCoordinate Range: (1,1) - ({matrixWidth},{matrixHeight})")
         placeMove=False
-        userInput2 = turt.textinput(f"{turnColor}'s Move", f"{menuList}\n\nWhere To?\nCoordinates: (1,1) - ({matrixWidth},{matrixHeight})")
+        userInput2 = turt.textinput(f"{turnColor}'s Move", f"{menuList}\n\nWhere To?\nCoordinates: (columns,rows)\nCoordinate Range: (1,1) - ({matrixWidth},{matrixHeight})")
         while(placeMove==False):
             result = isValidMove(matrix,userInput2)
             if(result=="quit"):
                 return 0
             elif(result=="instructions"):
                 print("these are the instructions")
-                userInput2 = turt.textinput(f"{turnColor}'s Move", f"{menuList}\n\nWhere To?\nCoordinates: (1,1) - ({matrixWidth},{matrixHeight})")
+                userInput2 = turt.textinput(f"{turnColor}'s Move", f"{menuList}\n\nWhere To?\nCoordinates: (columns,rows)\nCoordinate Range: (1,1) - ({matrixWidth},{matrixHeight})")
             elif(result=="turns"):
                 print(f"Turn: {turnNumber}")
-                userInput2 = turt.textinput(f"{turnColor}'s Move", f"{menuList}\n\nWhere To?\nCoordinates: (1,1) - ({matrixWidth},{matrixHeight})")
+                userInput2 = turt.textinput(f"{turnColor}'s Move", f"{menuList}\n\nWhere To?\nCoordinates: (columns,rows)\nCoordinate Range: (1,1) - ({matrixWidth},{matrixHeight})")
             elif(result==True):
                 nums = userInput2.split(",")
                 xCord=int(nums[0])-1
