@@ -124,10 +124,16 @@ def drawUserCircles(boardMatrix,boardHeight,boardWidth,circleRadius):
             turt.down()
             if(boardMatrix[j,i]==1):
                 turt.fillcolor("black")
-                playsound.playsound("boom.wav",False)
+                try:
+                    playsound.playsound("boom.wav",False)
+                except:
+                    print("Sound not available")
             elif(boardMatrix[j,i]==2):
                 turt.fillcolor("red")
-                playsound.playsound("boom.wav",False)
+                try:
+                    playsound.playsound("boom.wav",False)
+                except:
+                    print("Sound not available")
             else:
                 turt.fillcolor("white")
                 noCircle=True
