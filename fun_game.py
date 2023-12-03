@@ -8,6 +8,7 @@ totalBoardWidth = 200
 totalBoardHeight = 200
 winnerDeclared = False
 turn = 1
+instructions = "Teeko Instructions\n\nIn Teeko, a 5x5 empty grid is laid out. 2 players (red and black) each start with 4 game 'pieces' and alternate turns, with black starting first.\n\nPhase One:\nIn Phase One, players will alternate, placing one of their pieces on any empty cells on the grid. When all eight pieces have been placed, Phase Two begins.\n\t1. An empty grid will be drawn out, with each circle on the grid representing the cells of the grid.\n\t2. A prompt will appear on screen after the grid has been completed.\n\t3. Players will alternate entering coordinates (two numbers (1-5) separated by a comma). The first number designates the column, and the second designates the row where the piece will be placed.\n\t4. You will only be able to enter the coordinates for an empty cell.\n\t5. Players will be prompted until all 4 of each color is placed.\n\nPhase Two:\nIn Phase Two, if no player has won (see winning conditions), players will alternate moving their pieces to an adjacent orthogonal or diagonal empty cell until a winning condition is met.\n\t1. With all 8 pieces on the grid (4 black, 4 red), players will be prompted to enter the coordinates for one of their placed pieces they would like to move.\n\t2. After entering the current location of a piece, in which a piece can only be chosen that has an available adjacent spot, the player will be prompted to enter coordinates for where they want their piece moved.\n\t3. Players can only enter the coordinates of an empty cell that is diagonal or orthogonally adjacent to the piece that was selected to move.\n\nWinning Conditions:\nPlayers win when they have constructed either a 2x2 square or a 1x4 line of their pieces horizontally, vertically, or diagonally (four-in-a-row)."
 def drawXMatrix(boardHeight):
     """Draws the vertical gridlines. Takes in board height."""
     for i in range(boardHeight+1):
@@ -211,7 +212,7 @@ def processTurn(matrix,startingPlayerColor,turnNumber):
             if(result=="quit"):
                 return 0
             elif(result=="instructions"):
-                print("these are the instructions")
+                print(instructions)
                 userInput = turt.textinput(f"{turnColor}'s Move", f"{menuList}\n\nCoordinates: (columns,rows)\nCoordinate Range: (1,1) - ({matrixWidth},{matrixHeight})")
             elif(result=="turns"):
                 print(f"Turn: {turnNumber}")
