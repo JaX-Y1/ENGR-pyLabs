@@ -114,7 +114,7 @@ def askInputs():
             successFile = True
         except:
             print()
-            print("Try again! Please enter the full file name for the board (Enter nothing to exit).")
+            print("Try again! Please enter the full file name for the board.")
     boardMatrix.close()
     #print(boardContents)
     return boardContents
