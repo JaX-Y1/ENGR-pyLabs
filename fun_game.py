@@ -571,10 +571,11 @@ if(matrix.ndim!=1):
                 turt.done()
             elif(result=="Red Won!"):
                 winnerDeclared=True
-                turt.textinput("Winner!","Black Won!")
+                turt.textinput("Winner!","Red Won!")
                 turt.done()
             elif(turn==0): #quit return selection
                 print("Bye!")
+                turt.done() 
                 break
         else: #IF NO ONE WINS AFTER THIS, START MOVING PIECES
             turn = processTurn(matrix,"Black",turn)
@@ -585,10 +586,10 @@ if(matrix.ndim!=1):
                 turt.done()
             elif(result=="Red Won!"):
                 winnerDeclared=True
-                turt.textinput("Winner!","Black Won!")
+                turt.textinput("Winner!","Red Won!")
                 turt.done()
             elif(turn==0): #quit return selection
                 print("Bye!")
-                break
-    turt.done()            
+                turt.done() 
+                break           
 print("Done")
