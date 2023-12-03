@@ -6,6 +6,8 @@ import playsound #INSTALL VERSION 1.2.2
 #put boom.wav into the same directory as this file.
 totalBoardWidth = 200
 totalBoardHeight = 200
+drawOriginX=-100
+drawOriginY=350
 winnerDeclared = False
 turn = 1
 instructions = "\n\nTeeko Instructions\n\nIn Teeko, a 5x5 empty grid is laid out. 2 players (red and black) each start with 4 game 'pieces' and alternate turns, with black starting first.\nTo begin playing Teeko, enter the name of the file containing the board (board.csv).\n\nPhase One:\nIn Phase One, players will alternate, placing one of their pieces on any empty cells on the grid. When all eight pieces have been placed, Phase Two begins.\n\t1. An empty grid will be drawn out, with each circle on the grid representing the cells of the grid.\n\t2. A prompt will appear on screen after the grid has been completed.\n\t3. Players will alternate entering coordinates (two numbers (1-5) separated by a comma). The first number designates the column, and the second designates the row where the piece will be placed.\n\t4. You will only be able to enter the coordinates for an empty cell.\n\t5. Players will be prompted until all 4 of each color is placed.\n\nPhase Two:\nIn Phase Two, if no player has won (see winning conditions), players will alternate moving their pieces to an adjacent orthogonal or diagonal empty cell until a winning condition is met.\n\t1. With all 8 pieces on the grid (4 black, 4 red), players will be prompted to enter the coordinates for one of their placed pieces they would like to move.\n\t2. After entering the current location of a piece, in which a piece can only be chosen that has an available adjacent spot, the player will be prompted to enter coordinates for where they want their piece moved.\n\t3. Players can only enter the coordinates of an empty cell that is diagonal or orthogonally adjacent to the piece that was selected to move.\n\nWinning Conditions:\nPlayers win when they have constructed either a 2x2 square or a 1x4 line of their pieces horizontally, vertically, or diagonally (four-in-a-row)."
@@ -13,22 +15,22 @@ def drawXMatrix(boardHeight):
     """Draws the vertical gridlines. Takes in board height."""
     for i in range(boardHeight+1):
         turt.up()
-        turt.setpos(0,-i*(totalBoardHeight/boardHeight))
+        turt.setpos(drawOriginX,(-i*(totalBoardHeight/boardHeight)+drawOriginY))
         turt.down()
         turt.forward(totalBoardWidth)
     turt.up()
-    turt.setpos(0,0)
+    turt.setpos(drawOriginX,drawOriginY)
     turt.down()
 def drawYMatrix(boardWidth):
     """Draws the horizontal gridlines. Takes in board width."""
     turt.right(90)
     for i in range(boardWidth+1):
         turt.up()
-        turt.setpos((i*(totalBoardWidth/boardWidth)),0)
+        turt.setpos((i*(totalBoardWidth/boardWidth)+drawOriginX),drawOriginY)
         turt.down()
         turt.forward(totalBoardHeight)
     turt.up()
-    turt.setpos(0,0)
+    turt.setpos(drawOriginX,drawOriginY)
     turt.down()
     turt.left(90)
 
@@ -37,34 +39,34 @@ def drawDiagonal(boardHeight, boardWidth,direction):
     turt.right(direction)
     startPos = 0
     if(direction>45):
-        startPos = totalBoardWidth
+        startPos = drawOriginX+totalBoardWidth
     else:
-        startPos = 0
-    turt.setpos(startPos,0)
+        startPos = drawOriginX
+    turt.setpos(startPos,drawOriginY)
     segmentWidth = totalBoardWidth/boardWidth
     segmentHeight = totalBoardHeight/boardHeight
     for i in range(boardHeight):
         turt.up()
-        turt.setpos(startPos,-i*(totalBoardHeight/boardHeight))
+        turt.setpos(startPos,-i*(totalBoardHeight/boardHeight)+drawOriginY)
         turt.down()
         decreaser = -i + boardHeight
         diagLength = sqrt((decreaser*segmentWidth)**2 + (decreaser*segmentHeight)**2)
         turt.forward(diagLength)
     turt.up()
-    turt.setpos(startPos,0)
+    turt.setpos(startPos,drawOriginY)
     turt.down()
     for i in range(boardWidth):
         turt.up()
-        if(startPos==0):
-            turt.setpos(i*(totalBoardWidth/boardWidth),0)
+        if(startPos==drawOriginX):
+            turt.setpos(i*(totalBoardWidth/boardWidth)+drawOriginX,drawOriginY)
         else:
-            turt.setpos(startPos-(i*(totalBoardWidth/boardWidth)),0)
+            turt.setpos(startPos-(i*(totalBoardWidth/boardWidth)),drawOriginY)
         turt.down()
         decreaser = -i + boardWidth
         diagLength = sqrt((decreaser*segmentWidth)**2 + (decreaser*segmentHeight)**2)
         turt.forward(diagLength)
     turt.up()
-    turt.setpos(0,0)
+    turt.setpos(drawOriginX,drawOriginY)
     turt.down()
     turt.left(direction)
 
@@ -73,19 +75,20 @@ def drawCircleFrames(boardHeight,boardWidth,circleRadius):
     for i in range(boardHeight+1):
         for j in range(boardWidth+1):
             turt.up()
-            turt.setpos((j*(totalBoardWidth/boardWidth)),(-i*(totalBoardHeight/boardHeight))-circleRadius)
+            turt.setpos((j*(totalBoardWidth/boardWidth)+drawOriginX),(-i*(totalBoardHeight/boardHeight)+drawOriginY)-circleRadius)
             turt.down()
             turt.begin_fill()
             turt.circle(circleRadius)
             turt.end_fill()
     turt.up()
-    turt.setpos(0,0)
+    turt.setpos(drawOriginX,drawOriginY)
     turt.down()
 
 def initializeBoard(boardHeight,boardWidth,circleRadius):
     """Draws the intitial board. Takes in board height,width, and radius for tiles"""
     turt.speed(10.5)
-    turt.setpos(0,0)
+    turt.up()
+    turt.setpos(drawOriginX,drawOriginY)
     turt.fillcolor("white")
     turt.pencolor("black") #the board can be drawn with an adaptable height/width.
     drawXMatrix(boardHeight)
@@ -136,7 +139,7 @@ def drawUserCircles(boardMatrix,boardHeight,boardWidth,circleRadius):
         for j in range(boardWidth+1):
             noCircle=False
             turt.up()
-            turt.setpos((j*(totalBoardWidth/boardWidth)),(-i*(totalBoardHeight/boardHeight))-circleRadius)
+            turt.setpos((j*(totalBoardWidth/boardWidth)+drawOriginX),(-i*(totalBoardHeight/boardHeight)+drawOriginY)-circleRadius)
             turt.down()
             if(boardMatrix[j,i]==1):
                 turt.fillcolor("black")
@@ -167,7 +170,7 @@ def drawUserCircles(boardMatrix,boardHeight,boardWidth,circleRadius):
                 turt.circle(circleRadius)
                 turt.end_fill()
     turt.up()
-    turt.setpos(0,0)
+    turt.setpos(drawOriginX,drawOriginY)
     turt.down()
 
 def processTurn(matrix,startingPlayerColor,turnNumber):
