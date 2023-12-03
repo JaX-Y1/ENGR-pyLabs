@@ -105,7 +105,7 @@ def askInputs():
     boardContents = []
     while(successFile==False):
         try:
-            boardFile = input("Please enter the name of the file containing the board: ")
+            boardFile = input("Please enter the name of the file containing the board (Enter nothing to exit): ")
             if(boardFile==""):
                 print("Quitting...")
                 return
@@ -114,7 +114,7 @@ def askInputs():
             successFile = True
         except:
             print()
-            print("Try again! Please enter the full file name for the board.")
+            print("Try again! Please enter the full file name for the board (Enter nothing to exit).")
     boardMatrix.close()
     #print(boardContents)
     return boardContents
